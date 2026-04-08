@@ -1,4 +1,19 @@
-﻿
+﻿<#
+.SYNOPSIS
+    Remediation script for Configuration Manager Get-SecureBootUpdateData CI
+
+.DESCRIPTION
+    Based on https://support.microsoft.com/en-us/topic/sample-secure-boot-inventory-data-collection-script-d02971d2-d4b5-42c9-b58a-8527f0ffa30b
+    Pulls secure boot update data from the example script and stores it in the specified WMI class. This data can them be pulled into
+    Configuration Manager via hardware inventory.
+
+.NOTES
+  Author: Eric Schloss
+  Version: 1.0
+  Created: 2026-03-30
+
+#>
+
 function Get-CimTypeFromValue
 {
     param($Value)
