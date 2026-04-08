@@ -1,4 +1,17 @@
-﻿#detection
+﻿<#
+.SYNOPSIS
+    Discovery script for Configuration Manager Get-SecureBootUpdateData CI
+
+.DESCRIPTION
+    Checks if the specified WMI class exists and has been updated in the specified number of days
+
+.NOTES
+  Author: Eric Schloss
+  Version: 1.0
+  Created: 2026-03-30
+
+#>
+
 $ClassName = "SecureBootUpdateData"
 $DetectionDays = 4
 
