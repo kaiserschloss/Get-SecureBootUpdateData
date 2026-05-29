@@ -643,8 +643,10 @@ try {
                 $latestEvent1795 = $event1795Array | Sort-Object TimeCreated -Descending | Select-Object -First 1
                 if ($latestEvent1795.Message -match '(?:error|code|status)[:\s]*(?:0x)?([0-9A-Fa-f]{8}|[0-9A-Fa-f]+)') {
                     $event1795ErrorCode = $matches[1]
+                    Write-Log -Message "Event 1795 (Firmware Error) Count: $event1795Count [Code: $event1795ErrorCode]"
+                } else {
+                    Write-Log -Message "Event 1795 (Firmware Error) Count: $event1795Count"
                 }
-                Write-Log -Message "Event 1795 (Firmware Error) Count: $event1795Count" $(if ($event1795ErrorCode) { "Code: $event1795ErrorCode" })
             }
             
             # 22. Event1796 - Error Code Logged (capture error code)
@@ -654,8 +656,10 @@ try {
                 $latestEvent1796 = $event1796Array | Sort-Object TimeCreated -Descending | Select-Object -First 1
                 if ($latestEvent1796.Message -match '(?:error|code|status)[:\s]*(?:0x)?([0-9A-Fa-f]{8}|[0-9A-Fa-f]+)') {
                     $event1796ErrorCode = $matches[1]
+                    Write-Log -Message "Event 1796 (Error Logged) Count: $event1796Count" $(if ($event1796ErrorCode) { "Code: $event1796ErrorCode" })
+                } else {
+                    Write-Log -Message "Event 1796 (Error Logged) Count: $event1796Count"
                 }
-                Write-Log -Message "Event 1796 (Error Logged) Count: $event1796Count" $(if ($event1796ErrorCode) { "Code: $event1796ErrorCode" })
             }
             
             # 23. Event1800 - Reboot Needed (NOT an error - update will proceed after reboot)
@@ -673,8 +677,10 @@ try {
                 $latestEvent1802 = $event1802Array | Sort-Object TimeCreated -Descending | Select-Object -First 1
                 if ($latestEvent1802.Message -match 'SkipReason:\s*(KI_\d+)') {
                     $knownIssueId = $matches[1]
+                    Write-Log -Message "Event 1802 (Known Firmware Issue) Count: $event1802Count [KI: $knownIssueId]"
+                } else {
+                    Write-Log -Message "Event 1802 (Known Firmware Issue) Count: $event1802Count"
                 }
-                Write-Log -Message "Event 1802 (Known Firmware Issue) Count: $event1802Count" $(if ($knownIssueId) { "KI: $knownIssueId" })
             }
             
             # 25. Event1803 - Missing KEK Update (OEM needs to supply PK signed KEK)
@@ -725,7 +731,7 @@ try {
     } else {
         $osVersion = $osInfo.Version
     }
-    Write-Log -Message -Message "OS Version: $osVersion"
+    Write-Log -Message "OS Version: $osVersion"
 } catch {
     # CIM may fail in some environments - use fallback
     $osVersion = [System.Environment]::OSVersion.Version.ToString()
